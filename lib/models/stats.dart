@@ -8,18 +8,18 @@ mixin Stats {
   // getters
   int get points => _points;
 
-  Map<String, int> get statsAsMap => {
-    'health': _health,
-    'attack': _attack,
-    'defense': _defense,
-    'skill': _skill,
-  };
+  // Map<String, int> get statsAsMap => {
+  //   'health': _health,
+  //   'attack': _attack,
+  //   'defense': _defense,
+  //   'skill': _skill,
+  // };
 
   List<Map<String, String>> get statsAsFormattedList => [
-    {'name': 'Health', 'value': _health.toString()},
-    {'name': 'Attack', 'value': _attack.toString()},
-    {'name': 'Defense', 'value': _defense.toString()},
-    {'name': 'Skill', 'value': _skill.toString()},
+    {'title': 'health', 'value': _health.toString()},
+    {'title': 'attack', 'value': _attack.toString()},
+    {'title': 'defense', 'value': _defense.toString()},
+    {'title': 'skill', 'value': _skill.toString()},
   ];
 
   // methods
