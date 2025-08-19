@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_rpg/models/character.dart';
+import 'package:flutter_rpg/screens/profile/heart.dart';
 import 'package:flutter_rpg/screens/profile/skill_list.dart';
 import 'package:flutter_rpg/screens/profile/stats_table.dart';
+import 'package:flutter_rpg/services/character_store.dart';
 import 'package:flutter_rpg/shared/styled_button.dart';
 import 'package:flutter_rpg/shared/styled_text.dart';
 import 'package:flutter_rpg/theme.dart';
+import 'package:provider/provider.dart';
 
 class Profile extends StatelessWidget {
   const Profile({super.key, required this.character});
@@ -20,28 +23,37 @@ class Profile extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             // basic info - image, vocation, description
-            Container(
-              padding: const EdgeInsets.all(16),
-              color: AppColors.secondaryColor.withValues(alpha: 0.3),
-              child: Row(
-                children: [
-                  Image.asset(
-                    'assets/img/vocations/${character.vocation.image}',
-                    width: 140,
-                    height: 140,
-                  ),
-                  const SizedBox(width: 20),
-                  Expanded(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
+            Stack(
+              children: [
+                Container(
+                  padding: const EdgeInsets.all(16),
+                  color: AppColors.secondaryColor.withValues(alpha: 0.3),
+                  child: Hero(
+                    tag: character.id,
+                    child: Row(
                       children: [
-                        StyledHeading(character.vocation.title),
-                        StyledText(character.vocation.description),
+                        Image.asset(
+                          'assets/img/vocations/${character.vocation.image}',
+                          width: 140,
+                          height: 140,
+                        ),
+                        const SizedBox(width: 20),
+                        Expanded(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              StyledHeading(character.vocation.title),
+                              StyledText(character.vocation.description),
+                            ],
+                          ),
+                        ),
                       ],
                     ),
                   ),
-                ],
-              ),
+                ),
+                // heart
+                Positioned(top: 10, right: 10, child: Heart(character)),
+              ],
             ),
 
             // weapon and ability
@@ -82,6 +94,11 @@ class Profile extends StatelessWidget {
             // save button
             StyledButton(
               onPressed: () {
+                // update in db
+                Provider.of<CharacterStore>(
+                  context,
+                  listen: false,
+                ).saveCharacter(character);
                 // show snackbar
                 ScaffoldMessenger.of(context).showSnackBar(
                   SnackBar(

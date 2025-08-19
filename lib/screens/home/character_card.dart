@@ -14,33 +14,36 @@ class CharacterCard extends StatelessWidget {
     return Card(
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-        child: Row(
-          children: [
-            Image.asset(
-              'assets/img/vocations/${character.vocation.image}',
-              width: 80,
-            ),
-            const SizedBox(width: 20),
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                StyledHeading(character.name),
-                StyledText(character.vocation.title),
-              ],
-            ),
-            const Spacer(),
-            IconButton(
-              onPressed: () {
-                // navigate to character profile screen
-                Navigator.of(context).push(
-                  MaterialPageRoute(
-                    builder: (_) => Profile(character: character),
-                  ),
-                );
-              },
-              icon: Icon(Icons.arrow_forward, color: AppColors.textColor),
-            ),
-          ],
+        child: Hero(
+          tag: character.id,
+          child: Row(
+            children: [
+              Image.asset(
+                'assets/img/vocations/${character.vocation.image}',
+                width: 80,
+              ),
+              const SizedBox(width: 20),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  StyledHeading(character.name),
+                  StyledText(character.vocation.title),
+                ],
+              ),
+              const Spacer(),
+              IconButton(
+                onPressed: () {
+                  // navigate to character profile screen
+                  Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: (_) => Profile(character: character),
+                    ),
+                  );
+                },
+                icon: Icon(Icons.arrow_forward, color: AppColors.textColor),
+              ),
+            ],
+          ),
         ),
       ),
     );

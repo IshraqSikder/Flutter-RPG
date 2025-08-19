@@ -8,12 +8,12 @@ mixin Stats {
   // getters
   int get points => _points;
 
-  // Map<String, int> get statsAsMap => {
-  //   'health': _health,
-  //   'attack': _attack,
-  //   'defense': _defense,
-  //   'skill': _skill,
-  // };
+  Map<String, int> get statsAsMap => {
+    'health': _health,
+    'attack': _attack,
+    'defense': _defense,
+    'skill': _skill,
+  };
 
   List<Map<String, String>> get statsAsFormattedList => [
     {'title': 'health', 'value': _health.toString()},
@@ -58,5 +58,15 @@ mixin Stats {
       _skill--;
       _points++;
     }
+  }
+
+  // set stats & points
+  void setStats({required int points, required Map<String, dynamic> stats}) {
+    _points = points;
+
+    _health = stats['health'];
+    _attack = stats['attack'];
+    _defense = stats['defense'];
+    _skill = stats['skill'];
   }
 }
